@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.eli.game9" version="2.25" xmlns="http://www.w3.org/ns/widgets">
+<widget id="com.eli.game92" version="2.25" xmlns="http://www.w3.org/ns/widgets">
  <preference name="Fullscreen" value="true" />
  <preference name="DisallowOverscroll" value="true" />
  <preference name="StatusBarOverlaysWebView" value="true" />
  <preference name="orientation" value="portrait" />
  <preference name="KeepRunning" value="true"/>
- <name>Game 9</name>
+ <name>Game 9.2</name>
  <icon src="" />
 
 
