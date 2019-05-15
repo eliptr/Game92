@@ -1,6 +1,7 @@
 var canvasMain = document.getElementById('canvas');
 var ctx = canvasMain.getContext('2d');
 var fill = document.getElementById('fill');
+var pause = document.getElementById('pause');
 
 function onload() {
   document.addEventListener("deviceready", onDeviceReady, false);
@@ -27,6 +28,8 @@ var windowHeight = window.innerHeight;
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
 var pixelRatio = window.devicePixelRatio || 1; /// get pixel ratio of device
+var downrate = 30;
+var downrate2 = Number(downrate * 1000);
 
 var og = 100;
 var unlog = "Hello, World!";
@@ -39,6 +42,8 @@ var finaldif = "Hello, World!";
 
 var down = 1;
 var before;
+
+var off = true;
 // load images
 
 
@@ -59,6 +64,9 @@ function test() {
 
   fill.style.top = 140 + "px";
   fill.style.left = 10 + "px";
+
+  pause.style.top = 5 + "px";
+  pause.style.left = 255 + "px";
 
   log = Date();
 
@@ -83,8 +91,12 @@ function test() {
   }
 
   if (localStorage.ogls) {
-    before = localStorage.getItem('ogls');
-    og = Math.round(Number(before) - (finaldif / 30));
+    if (off === true) {
+      og = Number(localStorage.ogls);
+    } else {
+      before = localStorage.getItem('ogls');
+      og = Math.round(Number(before) - (finaldif / downrate));
+    }
   } else {
     og = 100;
   }
@@ -109,18 +121,20 @@ function draw() {
   ctx.fillText(unlog, 10, 150);
   ctx.fillText(log, 10, 200);
   ctx.fillText(finaldif, 10, 300);
+  ctx.fillText(off, 800, 300);
 
 
 
   //requestAnimationFrame
   requestAnimationFrame(draw, 10);
   requestAnimationFrame(stop, 10);
+  requestAnimationFrame(pausefun, 10);
 }
 
 
 setInterval(function () {
   og = og - down;
-}, 30000);
+}, downrate2);
 
 function stop() {
   if (og <= 0) {
@@ -134,17 +148,24 @@ function stop() {
   }
 }
 
+function pausefun() {
+  if (off === true) {
+    down = 0;
+    var pause = document.getElementById('pause');
+    pause.style.backgroundColor = "#df7599";
+  } else {
+    down = 1;
+    var pause = document.getElementById('pause');
+    pause.style.backgroundColor = "#b0e0a8";
+  }
+}
+
 function fillcl() {
   og = og + 10;
   down = 1;
 }
-/*function counter() {
-    var i = 0;
-    var num = 0;
-    // This block will be executed 100 times.
-    setInterval(function(){
-        if (i == 100) clearInterval(this);
-        else num = num + 1; text = num;
-    }, 1000);
-} // End
-counter()*/
+
+function pausecl() {
+  off = !off;
+  console.log(off);
+}
