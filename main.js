@@ -16,19 +16,23 @@ function onDeviceReady() {
 function onPause() {
   localStorage.ogls = og;
   localStorage.unlogls = new Date();
+  localStorage.switch = off;
 }
 
 function onResume() {
     test()
+    stringValue = localStorage.switch;
+    boolValue = JSON.parse(stringValue); //returns true
 }
 
 //variabels
+var downrate = 30;
+
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
 var pixelRatio = window.devicePixelRatio || 1; /// get pixel ratio of device
-var downrate = 30;
 var downrate2 = Number(downrate * 1000);
 
 var og = 100;
@@ -44,6 +48,9 @@ var down = 1;
 var before;
 
 var off = true;
+
+var stringValue = localStorage.switch;
+var boolValue = JSON.parse(stringValue); //returns true
 // load images
 
 
@@ -77,7 +84,9 @@ function test() {
 
 
   // positions var
-
+  if (localStorage.switch) {
+    off = boolValue;
+  }
 
   if (localStorage.unlogls) {
     unlog = localStorage.getItem('unlogls');
@@ -91,8 +100,8 @@ function test() {
   }
 
   if (localStorage.ogls) {
-    if (off === true) {
-      og = Number(localStorage.ogls);
+    if (boolValue === true) {
+      og = localStorage.ogls;
     } else {
       before = localStorage.getItem('ogls');
       og = Math.round(Number(before) - (finaldif / downrate));
